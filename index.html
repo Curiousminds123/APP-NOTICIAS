@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Observatorio de Noticias sobre IA y Educación — Noticias, legislación, sentencias y recursos sobre inteligencia artificial en el ámbito educativo.">
+  <title>Observatorio IA & Educación — Noticias, Sentencias y Legislación</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="lang-es">
+
+  <!-- CABECERA PERIÓDICO -->
+  <header class="newspaper-header">
+    <div class="header-top-bar">
+      <span id="current-date"></span>
+      <span class="header-tagline">Información verificada para la comunidad educativa</span>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="es" onclick="switchLang('es')">🇪🇸 Castellano</button>
+        <button class="lang-btn" data-lang="val" onclick="switchLang('val')">🟡 Valencià</button>
+      </div>
+    </div>
+    <div class="header-masthead">
+      <div class="masthead-inner">
+        <div class="masthead-kicker" data-es="OBSERVATORIO EDUCATIVO" data-val="OBSERVATORI EDUCATIU">OBSERVATORIO EDUCATIVO</div>
+        <h1 class="masthead-title">IA &amp; Educación</h1>
+        <p class="masthead-subtitle" data-es="Noticias · Sentencias · Legislación · Casos" data-val="Notícies · Sentències · Legislació · Casos">Noticias · Sentencias · Legislación · Casos</p>
+      </div>
+    </div>
+    <nav class="section-nav">
+      <a href="#noticias" class="snav-link active" data-es="📰 Noticias" data-val="📰 Notícies">📰 Noticias</a>
+      <a href="#sentencias" class="snav-link" data-es="⚖️ Sentencias" data-val="⚖️ Sentències">⚖️ Sentencias</a>
+      <a href="#casos-ia" class="snav-link" data-es="🤖 Casos IA" data-val="🤖 Casos IA">🤖 Casos IA</a>
+      <a href="#legislacion" class="snav-link" data-es="📜 Legislación" data-val="📜 Legislació">📜 Legislación</a>
+      <a href="#repercusiones" class="snav-link" data-es="👩‍🏫 Repercusiones" data-val="👩‍🏫 Repercussions">👩‍🏫 Repercusiones</a>
+      <a href="#multimedia" class="snav-link" data-es="📺 Multimedia" data-val="📺 Multimèdia">📺 Multimedia</a>
+    </nav>
+  </header>
+
+  <main class="newspaper-main shell">
+
+    <!-- FILTROS -->
+    <section class="filters-bar">
+      <div class="filters-inner">
+        <div class="filter-group">
+          <label data-es="Categoría:" data-val="Categoria:">Categoría:</label>
+          <select id="filter-category" onchange="applyFilters()">
+            <option value="" data-es="Todas" data-val="Totes">Todas</option>
+            <option value="noticias" data-es="📰 Noticias" data-val="📰 Notícies">📰 Noticias</option>
+            <option value="investigacion" data-es="🔬 Investigación" data-val="🔬 Investigació">🔬 Investigación</option>
+            <option value="sentencia" data-es="⚖️ Sentencia firme" data-val="⚖️ Sentència ferma">⚖️ Sentencia firme</option>
+            <option value="procedimiento" data-es="🔍 Procedimiento en curso" data-val="🔍 Procediment en curs">🔍 Procedimiento en curso</option>
+            <option value="legislacion" data-es="📜 Legislación" data-val="📜 Legislació">📜 Legislación</option>
+            <option value="caso-curioso" data-es="🤯 Caso curioso" data-val="🤯 Cas curiós">🤯 Caso curioso</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label data-es="País:" data-val="País:">País:</label>
+          <select id="filter-country" onchange="applyFilters()">
+            <option value="" data-es="Todos" data-val="Tots">Todos</option>
+            <option value="España">🇪🇸 España</option>
+            <option value="Europa">🇪🇺 Europa</option>
+            <option value="EEUU">🇺🇸 EE.UU.</option>
+            <option value="Internacional">🌍 Internacional</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label data-es="Año:" data-val="Any:">Año:</label>
+          <select id="filter-year" onchange="applyFilters()">
+            <option value="" data-es="Todos" data-val="Tots">Todos</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+          </select>
+        </div>
+        <div class="filter-group filter-search">
+          <input type="search" id="filter-search" placeholder="Buscar noticia, caso o sentencia…" oninput="applyFilters()">
+        </div>
+        <div class="filter-export">
+          <button onclick="exportPDF()" class="btn-export" title="Exportar a PDF">⬇ PDF</button>
+          <button onclick="exportCSV()" class="btn-export" title="Exportar a CSV">⬇ CSV</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTADA / TITULARES DESTACADOS -->
+    <section class="featured-section" id="destacados">
+      <div class="featured-grid">
+        <article class="featured-main">
+          <span class="article-type type-investigacion">🔬 Investigación</span>
+          <span class="article-country">🌍 Internacional · 2024</span>
+          <h2><a href="https://www.nature.com/articles/s41586-024-07422-z" target="_blank" rel="noopener">La IA genera respuestas más precisas que los médicos, según estudio en <em>Nature</em></a></h2>
+          <p>Un estudio publicado en la revista científica <em>Nature</em> demuestra que modelos de lenguaje como GPT-4 superan a médicos humanos en diagnóstico diferencial. El debate educativo se centra en qué habilidades seguirán siendo exclusivamente humanas y cómo preparar a los estudiantes para trabajar con IA.</p>
+          <div class="article-tags"><span class="tag">IA médica</span><span class="tag">Futuro profesional</span><span class="tag">Habilidades humanas</span></div>
+          <a href="https://www.nature.com/articles/s41586-024-07422-z" class="article-link" target="_blank" rel="noopener" data-es="Leer en Nature →" data-val="Llegir a Nature →">Leer en Nature →</a>
+        </article>
+        <div class="featured-sidebar">
+          <article class="featured-side-card">
+            <span class="article-type type-sentencia">⚖️ Sentencia firme</span>
+            <h3><a href="https://www.aepd.es/documento/ps-00341-2023.pdf" target="_blank" rel="noopener">España: primera sanción por uso de IA que discrimina a menores en proceso de admisión</a></h3>
+            <p>La AEPD impone una multa de 200.000 € por uso de algoritmos de selección sin auditoría ni garantías para menores.</p>
+            <a href="https://www.aepd.es/documento/ps-00341-2023.pdf" class="article-link" target="_blank" rel="noopener">Ver resolución →</a>
+          </article>
+          <article class="featured-side-card">
+            <span class="article-type type-caso">🤯 Caso curioso</span>
+            <h3><a href="https://www.theguardian.com/technology/2023/jun/22/two-us-lawyers-fined-submitting-fake-court-citations-chatgpt" target="_blank" rel="noopener">Dos abogados multados por citar casos judiciales inventados por ChatGPT</a></h3>
+            <p>Un tribunal de Nueva York sancionó a dos abogados que presentaron jurisprudencia fabricada por IA sin verificarla.</p>
+            <a href="https://www.theguardian.com/technology/2023/jun/22/two-us-lawyers-fined-submitting-fake-court-citations-chatgpt" class="article-link" target="_blank" rel="noopener">Leer en The Guardian →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN NOTICIAS -->
+    <section class="news-section" id="noticias">
+      <h2 class="section-title" data-es="📰 Noticias" data-val="📰 Notícies">📰 Noticias</h2>
+      <div class="article-grid" id="news-grid">
+        <!-- JS renderizará aquí -->
+      </div>
+    </section>
+
+    <!-- SECCIÓN SENTENCIAS -->
+    <section class="news-section" id="sentencias">
+      <h2 class="section-title" data-es="⚖️ Sentencias y Jurisprudencia" data-val="⚖️ Sentències i Jurisprudència">⚖️ Sentencias y Jurisprudencia</h2>
+      <div class="rulings-intro">
+        <p data-es="Apartado especial de condenas, resoluciones firmes y procedimientos en curso relacionados con la IA en educación y protección de menores." data-val="Apartat especial de condemnes, resolucions fermes i procediments en curs relacionats amb la IA en educació i protecció de menors.">Apartado especial de condenas, resoluciones firmes y procedimientos en curso relacionados con la IA en educación y protección de menores.</p>
+      </div>
+      <div class="article-grid" id="rulings-grid">
+        <!-- JS renderizará aquí -->
+      </div>
+    </section>
+
+    <!-- SECCIÓN CASOS CURIOSOS IA -->
+    <section class="news-section" id="casos-ia">
+      <h2 class="section-title" data-es="🤯 Casos Curiosos: Cuando la IA falla (o sorprende)" data-val="🤯 Casos Curiosos: Quan la IA falla (o sorprèn)">🤯 Casos Curiosos: Cuando la IA falla (o sorprende)</h2>
+      <p class="section-lead" data-es="Situaciones reales, explicadas de forma comprensible, en las que la IA ha generado problemas inesperados en todo el mundo." data-val="Situacions reals, explicades de forma comprensible, en les quals la IA ha generat problemes inesperats a tot el món.">Situaciones reales, explicadas de forma comprensible, en las que la IA ha generado problemas inesperados en todo el mundo.</p>
+      <div class="article-grid" id="casos-grid">
+        <!-- JS renderizará aquí -->
+      </div>
+    </section>
+
+    <!-- SECCIÓN LEGISLACIÓN -->
+    <section class="news-section legislation-section" id="legislacion">
+      <h2 class="section-title" data-es="📜 Legislación sobre IA" data-val="📜 Legislació sobre IA">📜 Legislación sobre IA</h2>
+      <div class="legis-tabs">
+        <button class="legis-tab active" onclick="showLegis('eu')" data-es="🇪🇺 Europea" data-val="🇪🇺 Europea">🇪🇺 Europea</button>
+        <button class="legis-tab" onclick="showLegis('es')" data-es="🇪🇸 Española" data-val="🇪🇸 Espanyola">🇪🇸 Española</button>
+        <button class="legis-tab" onclick="showLegis('val')" data-es="🟡 Valenciana" data-val="🟡 Valenciana">🟡 Valenciana</button>
+      </div>
+      <div class="legis-content" id="legis-eu">
+        <!-- EU legislation -->
+      </div>
+      <div class="legis-content" id="legis-es" hidden>
+        <!-- ES legislation -->
+      </div>
+      <div class="legis-content" id="legis-val" hidden>
+        <!-- VAL legislation -->
+      </div>
+    </section>
+
+    <!-- SECCIÓN REPERCUSIONES -->
+    <section class="news-section" id="repercusiones">
+      <h2 class="section-title" data-es="👩‍🏫 Repercusiones: Estudiantes, Familias y Profesorado" data-val="👩‍🏫 Repercussions: Estudiants, Famílies i Professorat">👩‍🏫 Repercusiones: Estudiantes, Familias y Profesorado</h2>
+      <div class="repercusiones-grid">
+        <div class="repercusion-card">
+          <div class="rep-icon">👩‍🎓</div>
+          <h3 data-es="Para el Alumnado" data-val="Per a l'Alumnat">Para el Alumnado</h3>
+          <ul id="rep-students"></ul>
+        </div>
+        <div class="repercusion-card">
+          <div class="rep-icon">👨‍👩‍👧</div>
+          <h3 data-es="Para las Familias" data-val="Per a les Famílies">Para las Familias</h3>
+          <ul id="rep-families"></ul>
+        </div>
+        <div class="repercusion-card">
+          <div class="rep-icon">🧑‍🏫</div>
+          <h3 data-es="Para el Profesorado" data-val="Per al Professorat">Para el Profesorado</h3>
+          <ul id="rep-teachers"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN MULTIMEDIA -->
+    <section class="news-section" id="multimedia">
+      <h2 class="section-title" data-es="📺 Multimedia: TV, Radio, YouTube y Documentales" data-val="📺 Multimèdia: TV, Ràdio, YouTube i Documentals">📺 Multimedia: TV, Radio, YouTube y Documentales</h2>
+      <div class="multimedia-grid" id="multimedia-grid">
+        <!-- JS renderizará aquí -->
+      </div>
+    </section>
+
+    <!-- HEMEROTECA -->
+    <section class="news-section" id="hemeroteca">
+      <h2 class="section-title" data-es="🗂️ Hemeroteca Completa" data-val="🗂️ Hemeroteca Completa">🗂️ Hemeroteca Completa</h2>
+      <p class="section-lead" data-es="Todos los artículos, noticias, investigaciones y sentencias indexadas. Usa los filtros superiores para navegar." data-val="Tots els articles, notícies, investigacions i sentències indexades. Usa els filtres superiors per navegar.">Todos los artículos, noticias, investigaciones y sentencias indexadas. Usa los filtros superiores para navegar.</p>
+      <div class="article-list" id="hemeroteca-list">
+        <!-- JS renderizará aquí -->
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="newspaper-footer">
+    <div class="footer-inner shell">
+      <div class="footer-brand">
+        <h2>🗞️ Observatorio IA &amp; Educación</h2>
+        <p data-es="Portal de información sobre inteligencia artificial en el ámbito educativo. Para docentes, familias y estudiantes." data-val="Portal d'informació sobre intel·ligència artificial en l'àmbit educatiu. Per a docents, famílies i estudiants.">Portal de información sobre inteligencia artificial en el ámbito educativo. Para docentes, familias y estudiantes.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#noticias" data-es="Noticias" data-val="Notícies">Noticias</a>
+        <a href="#sentencias" data-es="Sentencias" data-val="Sentències">Sentencias</a>
+        <a href="#legislacion" data-es="Legislación" data-val="Legislació">Legislación</a>
+        <a href="#multimedia" data-es="Multimedia" data-val="Multimèdia">Multimedia</a>
+      </div>
+      <div class="footer-credit">
+        <p>Materiales creados por <strong>Ana H. Iranzo</strong> (asistida con IA).</p>
+        <p class="footer-disclaimer" data-es="Los enlaces apuntan a fuentes originales. Este observatorio es un recurso educativo sin ánimo de lucro." data-val="Els enllaços apunten a fonts originals. Aquest observatori és un recurs educatiu sense ànim de lucre.">Los enlaces apuntan a fuentes originales. Este observatorio es un recurso educativo sin ánimo de lucre.</p>
+        <p><a href="https://curiousminds123.github.io/EDOCENTIA/" target="_blank" rel="noopener">← Volver a EDOCENTIA</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
